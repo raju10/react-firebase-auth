@@ -13,7 +13,9 @@ function App() {
     email : "",
     photo : "",
     password : "",
-    name : ""
+    name : "",
+    error : "",
+    success : false
   })
   console.log(users)
 
@@ -86,10 +88,29 @@ function App() {
       ///////////////submit /////////////////////////
 
       const handelSubmit = (e) =>{
-        console.log(users.name , users.email)
+        console.log(users.name , users.email,users.password)
 
-        if(users.name && users.password){
-          console.log("submating")
+        if(users.email && users.password){
+              firebase.auth().createUserWithEmailAndPassword(users.email, users.password)
+              .then( res => {
+                    console.log(res)
+                    const newUserInfo = {...users}
+                    newUserInfo.error = ""
+                    newUserInfo.success = true
+                    setUsers(newUserInfo)
+
+              })
+             .catch((error) => {
+                  var errorCode = error.code;
+                   var errorMessage = error.message;
+                   const newUserInfo = {...users}
+                   newUserInfo.error = errorMessage
+                   newUserInfo.success = false
+                   setUsers(newUserInfo)
+                   console.log("submit err",errorCode,errorMessage)
+            
+              });
+
         }
         e.preventDefault()
       }
@@ -124,8 +145,14 @@ function App() {
               <input type="password" name="password" id=""  onBlur={handelOnBlur}  placeholder="Your password" required/>
                  <br/>
               <input type="submit" value="Submit" onClick={handelSubmit}/>
+             
          </form>
-
+        
+          <p style={{color:"red"}}>{users.error}</p>
+          {
+            users.success &&  <p style={{color:"green"}}>User Created Succesfully</p>
+          }
+         
     </div>
   );
 }
