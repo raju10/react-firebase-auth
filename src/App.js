@@ -8,6 +8,8 @@ import { useState } from 'react';
 firebase.initializeApp(firebaseConfig);
 
 function App() {
+  const [newUser , setNewUser] = useState(false)
+
   const [users ,setUsers] = useState({
     isSignInUser : false,
     email : "",
@@ -16,6 +18,7 @@ function App() {
     name : "",
     error : "",
     success : false
+   
   })
   console.log(users)
 
@@ -137,8 +140,11 @@ function App() {
           <p>Name : {users.name}</p>
           <p>Email : {users.email}</p>
           <p>Password : {users.password}</p>
+
+          <input type="checkbox" name="newUser" onChange={()=> setNewUser(!newUser)} id=""/>
+          <label htmlFor="newUser">New User Sign Up</label>
           <form action="">
-              <input type="text" name="name" onBlur={handelOnBlur} placeholder="Your Name" required/>
+            { newUser &&  <input type="text" name="name" onBlur={handelOnBlur} placeholder="Your Name" required/> }
                  <br/>
               <input type="email" name="email" id="" onBlur={handelOnBlur} placeholder="Your email addres" required/>
                  <br/>
