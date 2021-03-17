@@ -59,6 +59,23 @@ function App() {
           console.log(err)
        });
       }
+
+      ////////////////////////////////////////////
+
+      const handelOnBlur = (e) =>{
+            console.log(e.target.name , e.target.value)
+
+            if(e.target.name === "email"){
+                const isEmailValid = /\S+@\S+\.\S+/.test(e.target.value)
+                console.log(isEmailValid)
+            }
+            if(e.target.name ==="password"){
+               const isPasswordValid = e.target.value.length >=6 ;
+               const passwordHasNum = /\d{1}/.test(e.target.value)
+               console.log(isPasswordValid && passwordHasNum)
+            }
+      }
+
   return (
     <div className="App">
 
@@ -66,7 +83,6 @@ function App() {
          users.isSignInUser ? <button onClick={handelSignOut}>Sign out</button> :
          <button onClick={handelSignIn}>Sign in</button>
        }
-          
 
           {
             users.isSignInUser && <div>
@@ -75,7 +91,17 @@ function App() {
                      <img src={users.photo} alt=""/>
             </div>
           }
-         
+
+          {/* new start */}
+          
+          <h1>Our Own Authentication</h1>
+          <form action="">
+              <input type="email" name="email" id="" onBlur={handelOnBlur} placeholder="Your email addres" required/>
+                 <br/>
+              <input type="password" name="password" id=""  onBlur={handelOnBlur}  placeholder="Your password" required/>
+                 <br/>
+              <input type="submit" value="Submit"/>
+         </form>
 
     </div>
   );
