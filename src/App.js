@@ -102,10 +102,12 @@ function App() {
           {/* new start */}
           
           <h1>Our Own Authentication</h1>
+          <p>Name : {users.name}</p>
           <p>Email : {users.email}</p>
           <p>Password : {users.password}</p>
           <form action="">
-             
+              <input type="text" name="name" onBlur={handelOnBlur} placeholder="Your Name" required/>
+                 <br/>
               <input type="email" name="email" id="" onBlur={handelOnBlur} placeholder="Your email addres" required/>
                  <br/>
               <input type="password" name="password" id=""  onBlur={handelOnBlur}  placeholder="Your password" required/>
