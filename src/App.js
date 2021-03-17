@@ -92,8 +92,8 @@ function App() {
 
       const handelSubmit = (e) =>{
         console.log(users.name , users.email,users.password)
-
-        if(users.email && users.password){
+////////////////////////// createUserWithEmailAndPassword ////////////////////////
+        if(newUser && users.email && users.password){
               firebase.auth().createUserWithEmailAndPassword(users.email, users.password)
               .then( res => {
                     console.log(res)
@@ -110,11 +110,32 @@ function App() {
                    newUserInfo.error = errorMessage
                    newUserInfo.success = false
                    setUsers(newUserInfo)
-                   console.log("submit err",errorCode,errorMessage)
+                   console.log("sign up err",errorCode,errorMessage)
             
               });
 
         }
+   ////////////////////////// SignIn With Email And Password ////////////////////////
+
+       if(!newUser && users.email && users.password){
+                 firebase.auth().signInWithEmailAndPassword(users.email, users.password)
+                  .then(res => {
+                    console.log(res)
+                    const newUserInfo = {...users}
+                    newUserInfo.error = ""
+                    newUserInfo.success = true
+                    setUsers(newUserInfo)
+                   })
+                 .catch((error) => {
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    const newUserInfo = {...users}
+                    newUserInfo.error = errorMessage
+                    newUserInfo.success = false
+                    setUsers(newUserInfo)
+                     console.log("sign in err",errorMessage,errorCode)
+                  });
+                }
         e.preventDefault()
       }
 
@@ -156,7 +177,7 @@ function App() {
         
           <p style={{color:"red"}}>{users.error}</p>
           {
-            users.success &&  <p style={{color:"green"}}>User Created Succesfully</p>
+            users.success &&  <p style={{color:"green"}}>User {newUser ? "sign up" : "login"} Succesfully</p>
           }
          
     </div>
