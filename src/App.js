@@ -83,6 +83,17 @@ function App() {
             }
       }
 
+      ///////////////submit /////////////////////////
+
+      const handelSubmit = (e) =>{
+        console.log(users.name , users.email)
+
+        if(users.name && users.password){
+          console.log("submating")
+        }
+        e.preventDefault()
+      }
+
   return (
     <div className="App">
 
@@ -112,7 +123,7 @@ function App() {
                  <br/>
               <input type="password" name="password" id=""  onBlur={handelOnBlur}  placeholder="Your password" required/>
                  <br/>
-              <input type="submit" value="Submit"/>
+              <input type="submit" value="Submit" onClick={handelSubmit}/>
          </form>
 
     </div>
